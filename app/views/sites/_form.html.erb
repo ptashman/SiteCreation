@@ -1,0 +1,41 @@
+<%= form_for(@site) do |f| %>
+  <% if @site.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@site.errors.count, "error") %> prohibited this site from being saved:</h2>
+
+      <ul>
+      <% @site.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :owner_id, value: current_owner.id %>
+  <%= f.hidden_field :trade_items, value: "" %>
+  <%= f.label "Name" %>
+  <%= f.text_field :name %>
+  <%= f.label "Trade Items" %>
+  <%= text_field_tag "trade_item1", "", onblur: "return load_items('trade_item1')" %><%= button_to_function "+", "return add_item(2)", id: "button1" %>
+  <% (2..9).each do |x| %>
+    <%= text_field_tag "trade_item#{x}", "", id: "trade_item#{x}", onblur: "return load_items('trade_item#{x}')", style: "display:none" %><%= button_to_function "+", "return add_item(#{x+1})", id: "button#{x}", style: "display:none" %>
+  <% end %>
+  <%= text_field_tag "trade_item10", "", id: "trade_item10", onblur: "return load_items('trade_item10')", style: "display:none" %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<script>
+  function add_item(number) {
+    document.getElementById("trade_item" + (number).toString()).style.display = "inline";
+    document.getElementById("button" + (number).toString()).style.display = "inline";
+    document.getElementById("button" + (number-1).toString()).style.display = "none";
+  }
+  function load_items(name) {
+    var item = document.getElementById(name).value;
+    if (item != "") {
+      var trade_items = document.getElementById("site_trade_items").value;
+      if (trade_items == "") { trade_items = item; } else { trade_items = trade_items + "," + item; }
+    }
+    document.getElementById("site_trade_items").value = trade_items;
+  }
+</script>

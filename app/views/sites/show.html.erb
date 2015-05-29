@@ -1,0 +1,13 @@
+<% provide(:title, @site.name) %>
+<div class="row">
+  <div class="span8">
+    <h4>Name:</h4><%= @site.name %>
+    <p><br></p>
+    <h4>Trade Items: </h4>
+    <% @site.trade_items.each do |item| %>
+      <%= item.name %>
+    <% end %>
+    <p><br></p>
+    <%= link_to "Visit Your Site", site_welcome_path(@site.id) %>
+  </div>
+</div>

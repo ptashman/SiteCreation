@@ -1,0 +1,15 @@
+<li id="<%= feed_item.id %>">
+  <%= link_to gravatar_for(feed_item.user), site_user_path(id: feed_item.user.id) %>
+    <span class="user">
+      <%= link_to feed_item.user.name, site_user_path(id: feed_item.user.id) %>
+    </span>
+    <p><span class="content">Wants: <%= feed_item.wants_item %><% unless feed_item.wants_description.blank? %> - <% end %><%= feed_item.wants_description %></span></p>
+    <p><span class="content">Has: <%= feed_item.has_item %><% unless feed_item.has_description.blank? %> - <% end %><%= feed_item.has_description %></span></p>
+    <span class="timestamp">
+      Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
+    </span>
+  <% if current_user?(feed_item.user) %>
+    <%= link_to "delete", site_micropost_path(id: feed_item.id), method: :delete,
+                                     data: { confirm: "You sure?" } %>
+  <% end %>
+</li>

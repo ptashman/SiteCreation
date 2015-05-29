@@ -1,0 +1,21 @@
+<% provide(:title, @owner.name) %>
+<div class="row">
+  <div class="span8">
+    <p>Name:</p>
+    <p><%= @owner.name %></p>
+    <p>Email:</p>
+    <p><%= @owner.email %></p>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_owner_path(@owner) %>
+<br><br>
+<h4>Sites</h4>
+<div class="row">
+  <div class="span8">
+    <% @owner.sites.each do |site| %>
+      <p><%= link_to site.name, site_welcome_path(site) %></p>
+      <p><%= link_to 'Edit', edit_site_path(site) %></p>
+    <% end %>
+  </div>
+</div>

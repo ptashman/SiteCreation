@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513023531) do
+ActiveRecord::Schema.define(version: 20150605213614) do
 
   create_table "microposts", force: true do |t|
     t.integer  "user_id"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20150513023531) do
     t.datetime "updated_at"
     t.integer  "owner_id"
     t.string   "name"
+    t.string   "subdomain"
   end
 
   create_table "trade_items", force: true do |t|

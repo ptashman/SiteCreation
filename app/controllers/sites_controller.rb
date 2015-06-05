@@ -66,6 +66,7 @@ class SitesController < ApplicationController
   end
 
   def welcome
+    @site = Site.where(subdomain: request.subdomain)[0]
   end
 
   private

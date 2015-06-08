@@ -1,21 +1,20 @@
 SampleApp::Application.routes.draw do
   resources :owners
+  resources :sites
   constraints(Subdomain) do
     get '/' => 'sites#welcome'
-    resources :sites do
-      resources :users do
-        member do
-          get :following, :followers
-          post :contact
-        end
+    resources :users do
+      member do
+        get :following, :followers
+        post :contact
       end
-      resources :microposts,    only: [:index, :create, :destroy]
-      resources :relationships, only: [:create, :destroy]
-      resources :user_sessions,      only: [:new, :create, :destroy]
-      match '/signup',  to: 'users#new',            via: 'get'
-      match '/signin',  to: 'user_sessions#new',         via: 'get'
-      match '/signout', to: 'user_sessions#destroy',     via: 'delete'
     end
+    resources :microposts,    only: [:index, :create, :destroy]
+    resources :relationships, only: [:create, :destroy]
+    resources :user_sessions,      only: [:new, :create, :destroy]
+    match '/signup',  to: 'users#new',            via: 'get'
+    match '/signin',  to: 'user_sessions#new',         via: 'get'
+    match '/signout', to: 'user_sessions#destroy',     via: 'delete'
   end
   resources :sessions,      only: [:new, :create, :destroy]
   match '/signup',  to: 'owners#new',            via: 'get'

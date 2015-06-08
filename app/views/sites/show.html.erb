@@ -8,6 +8,6 @@
       <%= item.name %>
     <% end %>
     <p><br></p>
-    <%= link_to "Visit Your Site", site_welcome_path(subdomain: @site.subdomain) %>
+    <%= link_to "Visit Your Site", root_path(subdomain: @site.subdomain) %>
   </div>
 </div>

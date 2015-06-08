@@ -1,7 +1,7 @@
 class MicropostsController < ApplicationController
   before_action :signed_in_user, only: [:create, :destroy]
   before_action :correct_user,   only: :destroy
-  before_action :set_site_by_subdomain, only: :index
+  before_action :set_site_by_subdomain, only: [:index, :destroy]
 
   def index
     if user_signed_in?
@@ -36,6 +36,6 @@ class MicropostsController < ApplicationController
 
     def correct_user
       @micropost = current_user.microposts.find_by(id: params[:id])
-      redirect_to site_welcome_url if @micropost.nil?
+      redirect_to root_url(subdomain: @site.subdomain) if @micropost.nil?
     end
 end

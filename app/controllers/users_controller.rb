@@ -3,7 +3,7 @@ class UsersController < ApplicationController
                 only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
-  before_action :set_site_by_subdomain, only: [:index, :show, :new, :edit]
+  before_action :set_site_by_subdomain, only: [:index, :show, :new, :edit, :update, :destroy]
 
   def index
     @users = @site.users.paginate(page: params[:page])
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     if @user.save
       user_sign_in @user
       flash[:success] = "Welcome!"
-      redirect_to site_user_url(id: @user.id)
+      redirect_to user_url(id: @user.id)
     else
       render 'new'
     end
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      redirect_to site_user_url(id: @user.id)
+      redirect_to user_url(id: @user.id)
     else
       render 'edit'
     end
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User destroyed."
-    redirect_to site_users_url
+    redirect_to users_url
   end
 
   def following
@@ -79,10 +79,10 @@ class UsersController < ApplicationController
 
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(site_welcome_url) unless current_user?(@user)
+      redirect_to(root_url(subdomain: @site.subdomain)) unless current_user?(@user)
     end
 
     def admin_user
-      redirect_to(site_welcome_url) unless current_user.admin?
+      redirect_to(root_url(subdomain: @site.subdomain)) unless current_user.admin?
     end
   end

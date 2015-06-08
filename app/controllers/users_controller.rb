@@ -3,9 +3,9 @@ class UsersController < ApplicationController
                 only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
+  before_action :set_site_by_subdomain, only: [:index, :show, :new, :edit]
 
   def index
-    @site = Site.find(params[:site_id])
     @users = @site.users.paginate(page: params[:page])
   end
 

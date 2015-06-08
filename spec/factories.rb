@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :site do
     id 1
     name "MySite"
+    subdomain "foo"
   end
 
   factory :user do

@@ -1,10 +1,10 @@
 class MicropostsController < ApplicationController
   before_action :signed_in_user, only: [:create, :destroy]
   before_action :correct_user,   only: :destroy
+  before_action :set_site_by_subdomain, only: :index
 
   def index
     if user_signed_in?
-      @site = Site.find(params[:site_id])
       @micropost  = current_user.microposts.build
       @feed_items = current_user.feed.paginate(page: params[:page])
     end

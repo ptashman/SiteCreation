@@ -1,4 +1,10 @@
 include ApplicationHelper
+def visit_with_subdomain(uri, options = {})
+  domain = Capybara.default_host
+  port = Capybara.server_port
+  subdomain = options[:subdomain]
+  visit "http://#{subdomain}.#{domain[11..-1]}#{uri}"
+end
 
 def sign_in(user, options={})
   if options[:no_capybara]

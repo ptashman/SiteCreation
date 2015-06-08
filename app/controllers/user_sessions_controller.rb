@@ -1,10 +1,10 @@
 class UserSessionsController < ApplicationController
+  before_action :set_site_by_subdomain, only: [:new, :create]
 
   def new
   end
 
   def create
-    @site = Site.find(params[:site_id])
     user = @site.users.find_by(email: params[:user_session][:email].downcase)
     if user && user.authenticate(params[:user_session][:password])
       user_sign_in user
@@ -17,6 +17,6 @@ class UserSessionsController < ApplicationController
 
   def destroy
     user_sign_out
-    redirect_to site_welcome_url(id: params[:site_id])
+    redirect_to root_path
   end
 end

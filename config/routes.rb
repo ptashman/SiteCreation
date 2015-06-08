@@ -1,18 +1,21 @@
 SampleApp::Application.routes.draw do
   resources :owners
-  resources :sites do
-    resources :users do
-      member do
-        get :following, :followers
-        post :contact
+  constraints(Subdomain) do
+    get '/' => 'sites#welcome'
+    resources :sites do
+      resources :users do
+        member do
+          get :following, :followers
+          post :contact
+        end
       end
+      resources :microposts,    only: [:index, :create, :destroy]
+      resources :relationships, only: [:create, :destroy]
+      resources :user_sessions,      only: [:new, :create, :destroy]
+      match '/signup',  to: 'users#new',            via: 'get'
+      match '/signin',  to: 'user_sessions#new',         via: 'get'
+      match '/signout', to: 'user_sessions#destroy',     via: 'delete'
     end
-    resources :microposts,    only: [:index, :create, :destroy]
-    resources :relationships, only: [:create, :destroy]
-    resources :user_sessions,      only: [:new, :create, :destroy]
-    match '/signup',  to: 'users#new',            via: 'get'
-    match '/signin',  to: 'user_sessions#new',         via: 'get'
-    match '/signout', to: 'user_sessions#destroy',     via: 'delete'
   end
   resources :sessions,      only: [:new, :create, :destroy]
   match '/signup',  to: 'owners#new',            via: 'get'
@@ -21,8 +24,5 @@ SampleApp::Application.routes.draw do
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
-  constraints(Subdomain) do
-    get '/' => 'sites#welcome'
-  end
   root to: 'static_pages#home'
 end

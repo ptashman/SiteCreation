@@ -1,5 +1,6 @@
 class SitesController < ApplicationController
   before_action :set_site, only: [:show, :edit, :update, :destroy]
+  before_action :set_site_by_subdomain, only: :welcome
 
   # GET /sites
   # GET /sites.json
@@ -66,7 +67,6 @@ class SitesController < ApplicationController
   end
 
   def welcome
-    @site = Site.where(subdomain: request.subdomain)[0]
   end
 
   private

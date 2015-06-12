@@ -1,10 +1,13 @@
+<link href="stylesheets/lightbox.css" rel="stylesheet" />
 <li id="<%= feed_item.id %>">
   <%= link_to gravatar_for(feed_item.user), user_path(id: feed_item.user.id) %>
     <span class="user">
       <%= link_to feed_item.user.name, user_path(id: feed_item.user.id) %>
     </span>
     <p><span class="content">Wants: <%= feed_item.wants_item %><% unless feed_item.wants_description.blank? %> - <% end %><%= feed_item.wants_description %></span></p>
+    <p><span class="content"><%= link_to image_tag(feed_item.wants_image_url(:thumb)), feed_item.wants_image_url,  {data:{lightbox: "wants_item#{feed_item.id}"}} %></span></p>
     <p><span class="content">Has: <%= feed_item.has_item %><% unless feed_item.has_description.blank? %> - <% end %><%= feed_item.has_description %></span></p>
+    <p><span class="content"><%= link_to image_tag(feed_item.has_image_url(:thumb)), feed_item.has_image_url,  {data:{lightbox: "has_item#{feed_item.id}"}} %></span></p>
     <span class="timestamp">
       Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
     </span>
@@ -13,3 +16,5 @@
                                      data: { confirm: "You sure?" } %>
   <% end %>
 </li>
+<script src="javascripts/jquery-1.11.0.min.js"></script>
+<script src="javascripts/lightbox.min.js"></script>

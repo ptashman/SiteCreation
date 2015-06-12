@@ -5,6 +5,8 @@ class Micropost < ActiveRecord::Base
   validates :wants_item, :presence => true, :length => { :maximum => 140 }
   validates :has_item, :presence => true, :length => { :maximum => 140 }
   validates :user_id, presence: true
+  mount_uploader :wants_image, MicropostImageUploader
+  mount_uploader :has_image, MicropostImageUploader
 
   def self.feed_items(user)
     array = from_users_followed_by(user) + from_users_matched_with(user) + user.microposts

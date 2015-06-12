@@ -9,14 +9,22 @@
   <div class="field styled-desc">
     <%= f.text_field :wants_description %>
   </div>
+  <h2 class="micropost">Upload an image</h2>
+  <div class="field styled-desc">
+    <%= f.file_field :wants_image %>
+  </div>
   <br>
   <h2 class="micropost">Enter an item that you have</h2>
   <div class="field styled-select">
-    <%= f.select :has_item, @site.trade_list%>
+    <%= f.select :has_item, @site.trade_list %>
   </div>
   <h2 class="micropost">Description</h2>
   <div class="field styled-desc">
     <%= f.text_field :has_description %>
+  </div>
+  <h2 class="micropost">Upload an image</h2>
+  <div class="field styled-desc">
+    <%= f.file_field :has_image %>
   </div>
   <br>
   <div class="actions">

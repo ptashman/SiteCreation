@@ -1,11 +1,15 @@
+<link href="stylesheets/lightbox.css" rel="stylesheet" />
 <li>
-  <span class="content">Wants: <%= micropost.wants_item %></span>
-  <span class="content">Has: <%= micropost.has_item %></span>
+  <p><span class="content">Wants: <%= micropost.wants_item %><% unless micropost.wants_description.blank? %> - <% end %><%= micropost.wants_description %></span></p>
+  <p><span class="content"><%= link_to image_tag(micropost.wants_image_url(:thumb)), micropost.wants_image_url,  {data:{lightbox: "wants_item#{micropost.id}"}} %></span></p>
+  <p><span class="content">Has: <%= micropost.has_item %><% unless micropost.has_description.blank? %> - <% end %><%= micropost.has_description %></span></p>
+  <p><span class="content"><%= link_to image_tag(micropost.has_image_url(:thumb)), micropost.has_image_url,  {data:{lightbox: "has_item#{micropost.id}"}} %></span></p>
   <span class="timestamp">
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
   </span>
   <% if current_user?(micropost.user) %>
-    <%= link_to "delete", micropost_path(id: micropost.id), method: :delete,
-                                     data: { confirm: "You sure?" } %>
+    <%= link_to "delete", micropost_path(id: micropost.id), method: :delete, data: { confirm: "You sure?" } %>
   <% end %>
 </li>
+<script src="javascripts/jquery-1.11.0.min.js"></script>
+<script src="javascripts/lightbox.min.js"></script>

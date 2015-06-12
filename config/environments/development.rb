@@ -27,4 +27,6 @@ SampleApp::Application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   config.assets.debug = true
   config.action_dispatch.tld_length = 0
+
+  config.serve_static_assets = true
 end

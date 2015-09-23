@@ -1,6 +1,4 @@
 class OwnersController < ApplicationController
-  before_action :signed_in_owner,
-                only: [:edit, :update, :show]
   before_action :correct_owner,   only: [:edit, :update, :show]
 
   # GET /owners/1

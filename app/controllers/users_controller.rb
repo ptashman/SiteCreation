@@ -1,8 +1,5 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user,
-                only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
 
   def index
     @site = Site.find(params[:site_id])
@@ -11,7 +8,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+    @posts = @user.posts.paginate(page: params[:page])
   end
 
   def new
@@ -47,20 +44,6 @@ class UsersController < ApplicationController
     redirect_to site_users_url
   end
 
-  def following
-    @title = "Following"
-    @user = User.find(params[:id])
-    @users = @user.followed_users.paginate(page: params[:page])
-    render 'show_follow'
-  end
-
-  def followers
-    @title = "Followers"
-    @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
-  end
-
   def contact
     @user = User.find(params[:id])
     @current_user = User.find(params[:current_user_id])
@@ -74,15 +57,9 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation, :site_id)
     end
-
-    # Before filters
-
+    
     def correct_user
       @user = User.find(params[:id])
       redirect_to(site_welcome_url) unless current_user?(@user)
-    end
-
-    def admin_user
-      redirect_to(site_welcome_url) unless current_user.admin?
     end
   end

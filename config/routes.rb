@@ -1,5 +1,7 @@
 SampleApp::Application.routes.draw do
 
+  devise_for :owners
+  devise_for :users
   resources :owners
   resources :sites do
     get :welcome
@@ -9,7 +11,7 @@ SampleApp::Application.routes.draw do
         post :contact
       end
     end
-    resources :microposts,    only: [:index, :create, :destroy]
+    resources :posts,    only: [:index, :create, :destroy]
     resources :relationships, only: [:create, :destroy]
     resources :user_sessions,      only: [:new, :create, :destroy]
     match '/signup',  to: 'users#new',            via: 'get'

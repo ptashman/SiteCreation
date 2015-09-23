@@ -1,0 +1,11 @@
+<li>
+  <span class="content">Wants: <%= post.wants_item %></span>
+  <span class="content">Has: <%= post.has_item %></span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(post.created_at) %> ago.
+  </span>
+  <% if current_user?(post.user) %>
+    <%= link_to "delete", site_post_path(id: post.id), method: :delete,
+                                     data: { confirm: "You sure?" } %>
+  <% end %>
+</li>
